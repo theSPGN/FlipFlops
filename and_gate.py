@@ -1,12 +1,15 @@
 class AndGate:
-    def __init__(self, input_1: bool = False, input_2: bool = False) -> None:
-        self.input_1 = input_1
-        self.input_2 = input_2
+    def __init__(self, *args: tuple[bool]) -> None:
+        self.args = args
 
-    def __new__(cls, input_1: bool = False, input_2: bool = False) -> bool:
-        return bool(input_1 * input_2)
+    def __call__(self, *args) -> bool:
+        return all(args) if len(args) > 0 else False
+
+    def __str__(self) -> str:
+        return "AndGate"
 
 
 # callback:
-# obj = AndGate(True, True)
+# obj = AndGate()
 # print(obj, type(obj))
+# print(obj(True, True, False, True))
