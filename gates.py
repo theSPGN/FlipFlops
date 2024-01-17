@@ -1,3 +1,8 @@
+import matplotlib
+
+print(matplotlib.__file__)
+
+
 class AndGate:
     def __init__(self, *args: bool) -> None:
         if not all(isinstance(arg, bool) for arg in args):
