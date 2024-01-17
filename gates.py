@@ -15,7 +15,6 @@ print(type(obj))
 print(obj())
 print(type(obj()))
 print(obj(True, True, False, True))
-
 """
 
 # *Output is False if 'unwired', so if there is no input then expected output is False
