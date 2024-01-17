@@ -18,7 +18,7 @@ class AndGate:
         return "AndGate"
 
 
-# callback instruction:
+# callback instruction for AndGate:
 
 # obj = AndGate(True, True, True)
 # print("---")
