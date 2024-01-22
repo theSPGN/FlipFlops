@@ -2,7 +2,6 @@ from gates import NandGate as Gnand
 from gates import NotGate as Gnot
 
 
-# All the flip flops are made with nands
 class RS:
     def __init__(
         self,
