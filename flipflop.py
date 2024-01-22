@@ -87,3 +87,7 @@ class D(RS):
             Gnot(self.d)()[0],
             self.clk,
         )
+
+
+class JK(RS):
+    pass
