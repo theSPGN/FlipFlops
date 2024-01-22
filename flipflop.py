@@ -7,8 +7,8 @@ class RS:
         self,
         r: bool = False,
         s: bool = False,
-        default_q: bool = False,
         clk: bool = False,
+        default_q: bool = False,
         rs_type: str = "async",
     ):
         if (
@@ -66,3 +66,24 @@ class RS:
 
     def __str__(self) -> str:
         return "RSAsync"
+
+
+class D(RS):
+    def __init__(self, d: bool = False, clk: bool = False, default_q: bool = False):
+        self.d = d
+        self.clk = clk
+        self.q = default_q
+        self.q_neg = Gnot(self.q)()[0]
+
+        super().__init__(self.d, Gnot(self.d)()[0], self.clk, self.q, rs_type="sync")
+
+    def __call__(self, d: bool = None, clk: bool = None) -> bool:
+        if d is not None and isinstance(d, bool):
+            self.d = d
+        if clk is not None and isinstance(clk, bool):
+            self.clk = clk
+        return super().__call__(
+            self.d,
+            Gnot(self.d)()[0],
+            self.clk,
+        )
