@@ -91,3 +91,34 @@ class D(RS):
 
 class JK(RS):
     pass
+
+
+class Edge:
+    def __init__(self, clk: bool = False, edge_type: str = "rising"):
+        self.clk = clk
+        self.edge_type = edge_type
+
+    def __call__(self, clk: bool = None):
+        if self.edge_type not in ["rising", "falling"]:
+            self.edge_type = "rising"
+            print(
+                "\033[93m"
+                + "The edge has been set on rising mode, "
+                + "please specify type of edge, to remove this message"
+                + "\033[0m"
+            )
+
+        clk = self.clk if clk is None else clk
+        if not isinstance(clk, bool):
+            raise ValueError("All arguments must be booleans")
+        if self.clk == clk:
+            return False
+        else:
+            if self.edge_type == "rising" and clk == True:
+                self.clk = clk
+                return True
+            elif self.edge_type == "falling" and clk == False:
+                self.clk = clk
+                return True
+            else:
+                return False
