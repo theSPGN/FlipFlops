@@ -90,7 +90,39 @@ class D(RS):
 
 
 class JK(RS):
-    pass
+    def __init__(
+        self,
+        j: bool = False,
+        k: bool = False,
+        clk: bool = False,
+        default_q: bool = False,
+    ):
+        self.j = j
+        self.k = k
+        self.clk = clk
+        self.q = default_q
+        self.q_neg = Gnot(self.q)()[0]
+        self.r = Gnand(self.j, self.clk, self.q_neg)
+        self.s = Gnand(self.k, self.clk, self.q)
+
+        super().__init__(self.r, self.s, self.clk, self.q, rs_type="async")
+
+    def __call__(self, j: bool = None, k: bool = None, clk: bool = None) -> bool:
+        if j is not None and isinstance(j, bool):
+            self.j = j
+        if clk is not None and isinstance(clk, bool):
+            self.clk = clk
+        if k is not None and isinstance(k, bool):
+            self.k = k
+
+        self.r = Gnand(self.j, self.clk, self.q_neg)
+        self.s = Gnand(self.k, self.clk, self.q)
+
+        return super().__call__(
+            self.j,
+            Gnot(self.j)()[0],
+            self.clk,
+        )
 
 
 class Edge:
