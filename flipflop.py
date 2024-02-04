@@ -120,8 +120,8 @@ class JK(RS):
         self.s = Gnand(self.k, self.clk, self.q)()
 
         return super().__call__(
-            self.j,
-            Gnot(self.j)()[0],
+            self.r,
+            self.s,
             self.clk,
         )
 
