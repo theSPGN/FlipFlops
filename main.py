@@ -2,7 +2,6 @@ import flipflop as ff
 
 if __name__ == "__main__":
 
-
     q = ff.RS(r=0, s=0, clk=0, default_q=True, rs_type="sync")
     print("\nRS-sync flipflop:")
     for clk in range(2):
