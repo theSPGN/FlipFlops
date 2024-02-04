@@ -2,6 +2,10 @@ from gates import NandGate as Gnand
 from gates import NotGate as Gnot
 
 
+def try_input(variable: any) -> bool:
+    return isinstance(variable, bool) or isinstance(variable, int)
+
+
 class RS:
     def __init__(
         self,
@@ -12,10 +16,10 @@ class RS:
         rs_type: str = "async",
     ):
         if (
-            not isinstance(r, bool)
-            or not isinstance(s, bool)
-            or not isinstance(clk, bool)
-            or not isinstance(default_q, bool)
+            not try_input(r)
+            or not try_input(s)
+            or not try_input(clk)
+            or not try_input(default_q)
         ):
             raise ValueError("All arguments must be booleans")
 
@@ -30,11 +34,11 @@ class RS:
         self.rs_type = rs_type
 
     def __call__(self, r: bool = None, s: bool = None, clk: bool = None) -> bool:
-        if r is not None and isinstance(r, bool):
+        if r is not None and try_input(r):
             self.r = r
-        if s is not None and isinstance(s, bool):
+        if s is not None and try_input(s):
             self.s = s
-        if clk is not None and isinstance(clk, bool):
+        if clk is not None and try_input(clk):
             self.clk = clk
 
         if self.rs_type == "async":
@@ -78,9 +82,9 @@ class D(RS):
         super().__init__(self.d, Gnot(self.d)()[0], self.clk, self.q, rs_type="sync")
 
     def __call__(self, d: bool = None, clk: bool = None) -> bool:
-        if d is not None and isinstance(d, bool):
+        if d is not None and try_input(d):
             self.d = d
-        if clk is not None and isinstance(clk, bool):
+        if clk is not None and try_input(clk):
             self.clk = clk
         return super().__call__(
             self.d,
@@ -108,11 +112,11 @@ class JK(RS):
         super().__init__(self.r, self.s, self.clk, self.q, rs_type="async")
 
     def __call__(self, j: bool = None, k: bool = None, clk: bool = None) -> bool:
-        if j is not None and isinstance(j, bool):
+        if j is not None and try_input(j):
             self.j = j
-        if clk is not None and isinstance(clk, bool):
+        if clk is not None and try_input(clk):
             self.clk = clk
-        if k is not None and isinstance(k, bool):
+        if k is not None and try_input(k):
             self.k = k
 
         self.r = Gnand(self.j, self.clk, self.q_neg)
@@ -141,7 +145,7 @@ class Edge:
             )
 
         clk = self.clk if clk is None else clk
-        if not isinstance(clk, bool):
+        if not try_input(clk):
             raise ValueError("All arguments must be booleans")
         if self.clk == clk:
             return False
