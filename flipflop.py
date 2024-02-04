@@ -1,9 +1,6 @@
 from gates import NandGate as Gnand
 from gates import NotGate as Gnot
-
-
-def try_input(variable: any) -> bool:
-    return isinstance(variable, bool) or isinstance(variable, int)
+from try_input import try_input
 
 
 class RS:
@@ -106,8 +103,8 @@ class JK(RS):
         self.clk = clk
         self.q = default_q
         self.q_neg = Gnot(self.q)()[0]
-        self.r = Gnand(self.j, self.clk, self.q_neg)
-        self.s = Gnand(self.k, self.clk, self.q)
+        self.r = Gnand(self.j, self.clk, self.q_neg)()
+        self.s = Gnand(self.k, self.clk, self.q)()
 
         super().__init__(self.r, self.s, self.clk, self.q, rs_type="async")
 
@@ -119,8 +116,8 @@ class JK(RS):
         if k is not None and try_input(k):
             self.k = k
 
-        self.r = Gnand(self.j, self.clk, self.q_neg)
-        self.s = Gnand(self.k, self.clk, self.q)
+        self.r = Gnand(self.j, self.clk, self.q_neg)()
+        self.s = Gnand(self.k, self.clk, self.q)()
 
         return super().__call__(
             self.j,

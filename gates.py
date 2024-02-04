@@ -1,3 +1,5 @@
+from try_input import try_input
+
 """
 
 It's about electronics,
@@ -22,13 +24,13 @@ print(obj(True, True, False, True))
 
 class AndGate:
     def __init__(self, *args: bool) -> None:
-        if not all(isinstance(arg, bool) for arg in args):
+        if not all(try_input(arg) for arg in args):
             raise ValueError("All arguments must be booleans")
 
         self.args = args
 
     def __call__(self, *args: bool) -> bool:
-        if not all(isinstance(arg, bool) for arg in args):
+        if not all(try_input(arg) for arg in args):
             raise ValueError("All arguments must be booleans")
 
         if len(args):
@@ -42,7 +44,7 @@ class AndGate:
 
 class OrGate(AndGate):
     def __call__(self, *args: bool) -> bool:
-        if not all(isinstance(arg, bool) for arg in args):
+        if not all(try_input(arg) for arg in args):
             raise ValueError("All arguments must be booleans")
 
         if len(args):
@@ -56,7 +58,7 @@ class OrGate(AndGate):
 
 class NotGate(AndGate):
     def __call__(self, *args: bool) -> tuple[bool]:
-        if not all(isinstance(arg, bool) for arg in args):
+        if not all(try_input(arg) for arg in args):
             raise ValueError("All arguments must be booleans")
 
         if len(args):
@@ -70,7 +72,7 @@ class NotGate(AndGate):
 
 class NorGate(AndGate):
     def __call__(self, *args: bool) -> bool:
-        if not all(isinstance(arg, bool) for arg in args):
+        if not all(try_input(arg) for arg in args):
             raise ValueError("All arguments must be booleans")
 
         if len(args):
@@ -84,7 +86,7 @@ class NorGate(AndGate):
 
 class NandGate(AndGate):
     def __call__(self, *args: bool) -> tuple[bool]:
-        if not all(isinstance(arg, bool) for arg in args):
+        if not all(try_input(arg) for arg in args):
             raise ValueError("All arguments must be booleans")
 
         value = lambda a: True if len(a) > 0 and a.count(True) < len(a) else False
@@ -100,7 +102,7 @@ class NandGate(AndGate):
 
 class XorGate(AndGate):
     def __call__(self, *args: bool) -> bool:
-        if not all(isinstance(arg, bool) for arg in args):
+        if not all(try_input(arg) for arg in args):
             raise ValueError("All arguments must be booleans")
 
         if len(args):
@@ -114,11 +116,11 @@ class XorGate(AndGate):
 
 class XnorGate(AndGate):
     def __call__(self, *args: bool) -> bool:
-        if not all(isinstance(arg, bool) for arg in args):
+        if not all(try_input(arg) for arg in args):
             raise ValueError("All arguments must be booleans")
 
-        value = (
-            lambda a: (a.count(True) == len(a) or a.count(False) == len(a))
+        value = lambda a: (
+            (a.count(True) == len(a) or a.count(False) == len(a))
             if len(a) > 0
             else False
         )
