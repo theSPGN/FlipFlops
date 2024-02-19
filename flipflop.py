@@ -68,6 +68,16 @@ class RS:
     def __str__(self) -> str:
         return "RSAsync"
 
+    def set(self) -> None:
+        self.q = True
+        self.q_neg = False
+        return self.q
+
+    def reset(self) -> None:
+        self.q = False
+        self.q_neg = True
+        return self.q
+
 
 class D(RS):
     def __init__(self, d: bool = False, clk: bool = False, default_q: bool = False):
